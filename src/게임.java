@@ -173,7 +173,7 @@ public class 게임 extends Thread{         //쓰레드라서 상속해줌
 
 
 
-    public void 게임Draw(Graphics g) {           // 게임에 그려질 요소들
+    public void 게임Draw(Graphics g) {           // 게임에 그려질 요소들 d
                                                 // 앞으로 만들 게임 안의 요소들을 그려주는 메소드는 전부 여기 넣음.
         매장문Draw(g);
         선반Draw(g);
