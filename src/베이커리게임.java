@@ -15,6 +15,13 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
     private Image 게임방법 = new ImageIcon("src/이미지/게임방법3.png").getImage();          // getImage()를 해야 이미지를 불러오나 봄
     private Image 타일 = new ImageIcon("src/이미지/타일.jpg").getImage();          // getImage()를 해야 이미지를 불러오나 봄(?)
     private Image 벼농사 = new ImageIcon("src/이미지/벼농사2.jpg").getImage();          // getImage()를 해야 이미지를 불러오나 봄(?)
+    private Image 수확 = new ImageIcon("src/이미지/알림2.png").getImage();          // getImage()를 해야 이미지를 불러오나 봄(?)
+    private Image 밀가루 = new ImageIcon("src/이미지/밀가루3.png").getImage();          // getImage()를 해야 이미지를 불러오나 봄(?)
+
+    public int 수확X, 수확Y;
+    public int 수확Width = 수확.getWidth(null);
+    public int 수확Height = 수확.getHeight(null);
+
 
     public boolean isBakery3, is게임방법, is타일;        // 불린변수들로 화면을 컨트롤함(?) true일 때 보이게끔 한다는건가?
     public static int 매출;                                            // 일매출 변수 // 화면 출력
@@ -48,6 +55,7 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
         is게임방법 = false;
         is타일 = false;
         겜.is작업실 = false;
+        겜.is밀가루 = false;
 
         addKeyListener(new KeyListener());      // 키 입력받는다고 호출. 이 코드를 써야 키가 먹힘
 
@@ -56,10 +64,10 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
     private void 게임시작() {                    // 엔터 누르고 게임방법 화면 나오게하려면 베이커리 화면은 false로 안 보이게하고
                                                 // 게임방법 창 true으로 보이게함
 
-        isBakery3 = false;
-        겜.is작업실 = false;
+//        isBakery3 = false;
+//        겜.is작업실 = false;
+//        겜.is밀가루 = false;
         is게임방법 = true;
-
 
         Timer 로딩타이머 = new Timer();              // 이게 뭐하는 역할일까?
         TimerTask 로딩테스크 = new TimerTask() {     // 게임설명 화면에서 3초후에 게임화면으로 넘어가도록 하려고 타이머와 타이머테스크 만듦
@@ -67,13 +75,14 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
             public void run() {                     // run 안에 실행할 내용을 쓰면 됨.
                 is게임방법 = false;
                 겜.is작업실 = false;
+                겜.is밀가루 = false;
                 is타일 = true;
 
                 /*작업실(); */                         // 여기다 넣으면 될까? 아냐 반복해야돼
             }
         };
 
-        로딩타이머.schedule(로딩테스크, 1000);
+        로딩타이머.schedule(로딩테스크, 3000);
 
         겜.start();                                  // 스레드 시작작
 
@@ -95,7 +104,80 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
 
     }*/
 
+    public void 미니게임끝() {
 
+        Timer 로딩타이머 = new Timer();              // 이게 뭐하는 역할일까?
+        TimerTask 로딩테스크 = new TimerTask() {     // 게임설명 화면에서 3초후에 게임화면으로 넘어가도록 하려고 타이머와 타이머테스크 만듦
+
+            @Override
+            public void run() {                     // run 안에 실행할 내용을 쓰면 됨.
+
+//                밀.현재고 += 겜.score;       // 여기쓰면 반복될까
+//                겜.is밀가루 = false;         주석처리하니까 깜빡거림이 더 나은걸
+//                겜.is작업실 = true;                             // 작업실로 나가기 ok
+                겜.사장X = 600;
+                겜.사장Y = 300;
+//                밀.현재고 += 겜.score;
+//                if (밀.현재고 >= 밀.최대재고) 밀.현재고 = 밀.최대재고;        // 최대잔고 넘지않기
+//                겜.score = 0;                  // 여기두면 수확할 때 0으로 나오는문제
+                겜.is밀가루끝  = true;
+
+//                수확();
+
+                System.out.println("미니게임끝");
+
+
+
+
+//                겜.is밀가루끝 = true;
+
+                /*작업실(); */                         // 여기다 넣으면 될까? 아냐 반복해야돼
+            }
+        };
+        로딩타이머.schedule(로딩테스크, 5000);
+//        겜.is작업실 = true;                             // 작업실로 나가기
+
+
+    }
+
+    public void 수확() {              // 수확! 후 3초뒤에 사라지기
+
+        Timer 로딩타이머 = new Timer();              // 이게 뭐하는 역할일까?
+        TimerTask 로딩테스크 = new TimerTask() {     // 게임설명 화면에서 3초후에 게임화면으로 넘어가도록 하려고 타이머와 타이머테스크 만듦
+
+            @Override
+            public void run() {
+
+                System.out.println("수확");
+                밀.현재고 += 겜.score;            // 이게 문제였어. 반복되면 ㄴㄴ
+                겜.score = 0;
+                겜.is밀가루끝 = false;
+//                겜.is작업실 = true;
+//                겜.score = 0;                  // 없애도 괜찮네?// 3초뒤에 실행되니까 그 때 초기화되면 출력되지않을까? >> 이상함
+            }
+        };
+
+        로딩타이머.schedule(로딩테스크,2100);
+    }
+
+    public void 레시피() {
+
+        Timer 로딩타이머 = new Timer();              // 이게 뭐하는 역할일까?
+        TimerTask 로딩테스크 = new TimerTask() {     // 게임설명 화면에서 3초후에 게임화면으로 넘어가도록 하려고 타이머와 타이머테스크 만듦
+
+            @Override
+            public void run() {
+
+                System.out.println("레시피");
+
+                겜.is레시피 = false;                // n초뒤에 false줘서 화면 전환
+                겜.is작업실 = true;                 // 작업실로 이동
+            }
+        };
+
+        로딩타이머.schedule(로딩테스크,5000);         // 마우스로 하거나 뒤로가기 key입력받을까..
+
+    }
 
 
 
@@ -129,13 +211,16 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
             isBakery3 = false;                                          // 메소드를 못 써서 여기에 불린넣음
             is게임방법 = false;
             is타일 = false;
+            겜.is밀가루 = false;
+//            겜.score = 0;                    // 여기 넣어야지(다른곳은 초기화가 안 됨) 왜?
+
             /*g.drawImage(작업실, 0,0,null);*/
 
             g.drawImage(타일, 0, 0, null);
             겜.작업실Draw(g);                                           // 사장만 등장
             g.setColor(Color.darkGray);
-            g.setFont(new Font("Arial", Font.BOLD, 20));     // 글꼴, 두께, 사이즈
-            g.drawString("flour : "+밀.현재고+"/"+밀.최대재고, 밀.x+30, 밀.y+밀.height+20);             // 출력 문구a
+            g.setFont(new Font("Arial", Font.BOLD, 30));     // 글꼴, 두께, 사이즈
+            g.drawString("flour : "+밀.현재고+"/"+밀.최대재고, 밀.x+50, 밀.y+밀.height+40);             // 출력 문구a
 
 
             if (겜.사장X - 겜.사장Speed <= 0) {                        // 왼쪽 벽에 부딪힌다면
@@ -144,21 +229,54 @@ public class 베이커리게임 extends JFrame {        // JFrame 상속한다. 
                 is게임방법 = false;
                 is타일 = true;
                 겜.is작업실 = false;
+                겜.is밀가루 = false;
 
                 겜.사장X = 1100;
 
             }
         }
-        if (동.is밀가루) {
+        if (겜.is밀가루) {              // 미니게임 시작
 
-            isBakery3 = false;
             겜.is작업실 = false;
-            is게임방법 = false;
 
-            g.drawImage(타일, 0, 0, null);
+            g.drawImage(벼농사, 0, 0, null);
+//            g.drawImage(겜.player, 겜.playerX, 겜.playerY, null);         얘는 그냥 박아둔다는건데;
+
+            System.out.println("is밀가루");
             /*동.미니게임Draw(g);*/
+            겜.미니게임Draw(g);
+            미니게임끝();                                // 10초 뒤에 게임 끝
 
         }
+        if (겜.is밀가루끝) {             // 미니게임 끝-수확            // 여기도 반복되는구나
+            수확();
+//            겜.is작업실 = true;
+
+//          밀.현재고 += 겜.score;
+            if (밀.현재고 >= 밀.최대재고) 밀.현재고 = 밀.최대재고;        // 최대잔고 넘지않기
+
+            g.drawImage(타일, 0, 0, null);
+            // 중앙위치
+            g.drawImage(수확, (겜.SCREEN_WIDTH-수확Width)/2, (겜.SCREEN_HEIGHT-수확Height)/2, null);       // 노란 수확창
+            g.drawImage(밀가루,
+                    (겜.SCREEN_WIDTH-수확Width)/2+300,
+                    (겜.SCREEN_HEIGHT-수확Height)/2+130, null);       // 노란 수확창
+            g.setColor(Color.darkGray);
+            g.setFont(new Font("Arial", Font.BOLD, 70));     // 글꼴, 두께, 사이즈
+            g.drawString("harvest : "+겜.score,
+                    (겜.SCREEN_WIDTH-수확Width)/2 +100,
+                    (겜.SCREEN_HEIGHT-수확Height)/2+220);             // 출력 문구a
+
+
+            System.out.println("수확했슈");
+//            겜.score = 0;     // 수확창에서 0으로 나오네
+
+        }
+        if (겜.is레시피) {
+
+            레시피();
+        }
+
 
         this.repaint();                         // 이 코드를 써야 이미지가 출력된댔음
 

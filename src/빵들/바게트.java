@@ -13,6 +13,8 @@ public class 바게트 extends 빵{
     public int 갯수 = 3;
     public int 가격 = 2800;
 
+    public int 밀g = 1200;
+
     int width = 바게트.getWidth(null);
     int height = 바게트.getHeight(null);
 }

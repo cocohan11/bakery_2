@@ -16,9 +16,11 @@ class 밀가루 extends 재료 {
 
     String 이름 = "밀가루";
     int 최대재고 = 3000; //g단위
-    int 현재고 = 0;   // 바꾸고싶으면 생성자로 초기화하기
-    int x = 300;
-    int y = 30;
+    int 현재고 = 0;   // 바꾸고싶으면 생성자로 초기화하기 // 0써놔도 ㄱㅊ
+
+
+    int x = 550;
+    int y = 50;
 
     int width = 밀가루.getWidth(null);
     int height = 밀가루.getHeight(null);

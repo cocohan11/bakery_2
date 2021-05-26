@@ -1,4 +1,5 @@
-/*
+package 연습;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -144,14 +145,9 @@ public class 동전먹기2 extends JFrame {
 
     }
 
-    void run() {
+    public static void main(String[] args) {
 
+        new 동전먹기2();                              // 한베이커리.메인 메소드에 예제.동전먹기 객체를 생성함으로써 생성자를 호출.
     }
 
-*/
-/*    public static void main(String[] args) {
-
-        new 동전먹기();                              // 한베이커리.메인 메소드에 예제.동전먹기 객체를 생성함으로써 생성자를 호출.
-    }*//*
-
-}*/
+}
